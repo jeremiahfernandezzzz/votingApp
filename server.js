@@ -65,15 +65,15 @@ app.use(express.static('public'));
 // http://expressjs.com/en/starter/basic-routing.html
 app.get("/", function (request, response) {
   //console.log(JSON.stringify(request.users));
-  response.sendFile(__dirname + '/public/views/polls.html');
+  //response.sendFile(__dirname + '/public/views/polls.html');
   //response.set
-  /*
+  
   if (request.user){
     response.redirect("/mypolls")
   } else {
     response.redirect("/polls")
   }
-  */
+  
 });
 
 app.get("/mypolls", function(request, response){
@@ -208,7 +208,7 @@ app.get("/polls", function(request, response){
           var polls = JSON.stringify(element);
           //response.writeHead(200, {'polls' : polls});
           //response.end("yo");
-          response.sendFile(__dirname + '/views/polls.html', {headers: {'polls' : polls}});
+          response.sendFile(__dirname + '/public/views/polls.html', {headers: {'polls' : polls}});
         })
         //console.log(polls)
       } 
