@@ -65,7 +65,7 @@ app.use(express.static('public'));
 // http://expressjs.com/en/starter/basic-routing.html
 app.get("/", function (request, response) {
   //console.log(JSON.stringify(request.users));
-  response.sendFile(__dirname + '/polls.html');
+  response.sendFile(__dirname + '/public/views/polls.html');
   //response.set
   /*
   if (request.user){
