@@ -43,11 +43,6 @@
 						<p>click on a title to vote on a poll</p>
 					</header>
 					<div class="row 150%" id="poll">
-						<div class="4u 12u$(medium)">
-							<section class="box">
-								insert poll data here
-							</section>
-						</div>
 					</div>
 				</div>
 			</section>
@@ -108,12 +103,12 @@
     
     var poll = document.createElement('div');
     poll.setAttribute("style", "float:left; border: medium dashed gray;");
-    poll.append(h);
     poll.append(chart);
    //document.querySelector("#poll").append(poll);
     var innerBox = document.createElement("section");
     innerBox.setAttribute("class", "box");
     innerBox.append(poll);
+    innerBox.append(h);
     var outerBox = document.createElement("div");
     //outerBox.setAttribute("class", "4u 12u$(medium)");
     outerBox.append(innerBox);
