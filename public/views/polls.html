@@ -88,7 +88,7 @@
         
         // Set chart options
         var options = {'title': "",
-                       'width': 400,
+                       'width': 300,
                        'height':200};
 
         // Instantiate and draw our chart, passing in some options.
@@ -110,9 +110,15 @@
     poll.setAttribute("style", "float:left; border: medium dashed gray;");
     poll.append(h);
     poll.append(chart);
-    document.querySelector("#poll").append(poll);
-    
-    /*
+   //document.querySelector("#poll").append(poll);
+    var innerBox = document.createElement("section");
+    innerBox.setAttribute("class", "box");
+    innerBox.append(poll);
+    var outerBox = document.createElement("div");
+    //outerBox.setAttribute("class", "4u 12u$(medium)");
+    outerBox.append(innerBox);
+    document.querySelector("#poll").append(outerBox);
+      /*
     //var title = document.createElement('h2');
     //var results = document.createElement('h3');
     document.createElement('h2').append(document.createTextNode(JSON.stringify(element['title'])));
