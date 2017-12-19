@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<!--
+	Transit by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Transit by TEMPLATED</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
+		<script src="js/jquery.min.js"></script>
+		<script src="js/skel.min.js"></script>
+		<script src="js/skel-layers.min.js"></script>
+		<script src="js/init.js"></script>
+		<script src="js/yo.js"></script>
+		<noscript>
+			<link rel="stylesheet" href="css/skel.css" />
+			<link rel="stylesheet" href="css/style.css" />
+			<link rel="stylesheet" href="css/style-xlarge.css" />
+		</noscript>
+	</head>
+	<body class="landing">
+
+		<!-- Header -->
+			<header id="header">
+				<h1><a href="index.html">Polls</a></h1>
+				<nav id="nav">
+					<ul>
+						<li><a href="/auth/twitter" class="button special">Sign In</a></li>
+					</ul>
+				</nav>
+			</header>
+
+		<!-- Three -->
+			<section id="three" class="wrapper style3 special">
+				<div class="container">
+					<header class="major">
+						<h2 id="pollTitle">Poll Title</h2>
+					</header>
+				</div>
+				<div style="float:left">
+					<div class="container 50%">
+						<form action="#" method="post">
+							<div class="row uniform">
+								<div class="12u$" id="pollChoices">
+								</div>
+								<div class="12u$">
+									<ul class="actions">
+										<li><input type="button" value="submit answer" class="special big" id="submitPollAnswer"></li>
+										<li id="newChoice">
+											<input id="customChoice" type="text" maxlength="20" placeholder="custom choice here">
+											<input type="button" id="addChoice" class="special small" value="add choice">
+										  </li>
+									</ul>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="container 50%">
+				yo
+				</div>
+			</section>
+
+	</body>
+</html>
+
+<script>
+
+  var poll = [{
+				"_id":"5a30e8613bcb5242af08f605",
+				"title":"sample poll title",
+				"choices":
+					{
+						"sample poll choice 1":3,
+						"sample poll choice 2":5,
+						"sample poll choice 3":3,
+						"elel":2,
+						"whut":1
+					}
+			}];
+  var choices = poll[0]['choices'];
+  var title = JSON.stringify(poll[0]['title']).replace(/"/g,'');
+  document.querySelector("#pollTitle").innerHTML = title;
+  Object.keys(choices).forEach(function(element){
+      var radioInput = document.createElement('input');
+      var radioLabel = document.createElement('label');
+      var radioText = document.createTextNode(element);
+      radioInput.setAttribute('type', 'radio');
+      radioInput.setAttribute('name', 'choice');
+      radioInput.setAttribute('id', element);
+      radioLabel.setAttribute('for', element);
+
+      //console.log(element);
+
+      //radioLabel.setAttribute('for', )
+      radioLabel.append(radioText);
+      document.querySelector("#pollChoices").append(radioInput);
+      document.querySelector("#pollChoices").append(radioLabel);
+      document.querySelector("#pollChoices").append(document.createElement('br'))
+  })
+  
+  //var submitButton = document.createElement('button');
+  //var submitText = document.createTextNode('answer!')
+  //submitButton.setAttribute('id', 'submitPollAnswer');
+  //submitButton.append(submitText);
+  //document.querySelector("#pollChoices").append(submitButton);
+  //alert(JSON.stringify(choices['qwe']))
+ //document.querySelector("#pollChoices").innerHTML = JSON.stringify(poll[0]["choices"]);
+  
+  document.querySelector("#addChoice").addEventListener("click", function(event){
+    event.preventDefault();
+    
+      var element = document.querySelector("#customChoice").value;
+      var newInput = document.createElement('input');
+      var newLabel = document.createElement('label');
+      var newText = document.createTextNode(element);
+      newInput.setAttribute('type', 'radio');
+      newInput.setAttribute('name', 'choice');
+      newInput.setAttribute('id', element);
+      newLabel.setAttribute('for', element);
+
+      newLabel.append(newText);
+      document.querySelector("#pollChoices").append(newInput);
+      document.querySelector("#pollChoices").append(newLabel);
+      document.querySelector("#pollChoices").append(document.createElement('br'))
+  })
+  document.querySelector("#submitPollAnswer").addEventListener("click", function(){
+    var answer = document.querySelectorAll("input[name='choice']:checked")[0].id;
+    
+    if (answer.length == 0){
+      alert("none selected");
+      console.log("none selected")
+    } else {
+      console.log(answer + " selected");
+      function httpGetAsync(theUrl, callback){
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = function() {
+              if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
+                callback(xmlHttp.responseText);   
+              } 
+            }
+             xmlHttp.open("POST", theUrl, true); // true for asynchronous
+             xmlHttp.send(answer);
+          }
+
+          httpGetAsync(window.location, function(response) {
+            console.log("answered: " + answer, response);
+        });
+    }
+  })
+  
+  var pollArray = [];
+  Object.entries(poll[0]['choices']).forEach(function(element){
+    pollArray.push([element[0],element[1]])
+  });
+  console.log(title);
+    
+  //var choices =
+</script>
