@@ -139,6 +139,7 @@ app.get("/polls", function(request, response){
           var polls = JSON.stringify(element);
           //response.writeHead(200, {'polls' : polls});
           //response.end("yo");
+          console.log(polls)
           response.sendFile(__dirname + '/public/views/polls.html', {headers: {'polls' : polls}});
         })
         //console.log(polls)
