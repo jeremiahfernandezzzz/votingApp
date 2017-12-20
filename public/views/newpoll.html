@@ -44,17 +44,14 @@
 					<form action="#" method="post">
 						<div class="row uniform">
 							<div class="6u 12u$(small)">
-								<input name="name" id="name" value="" placeholder="Name" type="text">
-							</div>
-							<div class="6u$ 12u$(small)">
-								<input name="email" id="email" value="" placeholder="Email" type="email">
+								<input id="newPollTitle" value="" placeholder="Title goes here" type="text">
 							</div>
 							<div class="12u$">
-								<textarea name="message" id="message" placeholder="Message" rows="6"></textarea>
+								<textarea id="newPollChoices" placeholder="Choices separated by newline" rows="6"></textarea>
 							</div>
 							<div class="12u$">
 								<ul class="actions">
-									<li><input value="Send Message" class="special big" type="submit"></li>
+									<li><input type="button" id="submitNewPoll" class="special large" value="Submit"></li>
 								</ul>
 							</div>
 						</div>
@@ -64,3 +61,49 @@
 
 	</body>
 </html>
+<script>
+
+var newPoll = {};
+var newChoice = {};
+  
+document.querySelector("#submitNewPoll").addEventListener("click", function(e){
+  //e.preventDefault();
+      if (document.querySelector("#newPollChoices").value == "" || document.querySelector("#newPollTitle").value == "") {
+        alert("empty title and/or choice list");
+      } else {
+          document.querySelector("#submitNewPoll").disabled = true;
+          event.preventDefault();        
+
+          //this part stores the poll info (title,choices:votes) in a JSON object
+          var newChoiceArray = document.querySelector("#newPollChoices").value.split('\n');
+          
+          newPoll = {
+            title: document.querySelector("#newPollTitle").value,
+            choices: newChoice
+          };
+        
+          newChoiceArray.forEach(function(element){
+            newChoice[element] = 0 
+          });
+          //end 
+          function httpGetAsync(theUrl, callback){
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = function() {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
+                callback(xmlHttp.responseText);
+              }
+            }
+            xmlHttp.open("POST", theUrl, true); // true for asynchronous
+            xmlHttp.send(JSON.stringify(newPoll));
+          }
+
+          httpGetAsync(window.location, function(response) {
+            alert("poll added: " + JSON.stringify(newPoll), response);
+            window.location = "warp-throne.glitch.me/polls"
+          });
+      }
+  
+},false)
+      
+</script>
+        
