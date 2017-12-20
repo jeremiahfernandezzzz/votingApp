@@ -70,7 +70,9 @@
 <script>
 
   var req = new XMLHttpRequest();
-  var poll = req.getAllResponseHeaders();
+  req.open('GET', document.location, false);
+  req.send(null);
+  var poll = JSON.parse(req.getResponseHeader('poll'));
   console.log(JSON.stringify(poll));
   var choices = poll[0]['choices'];
   var title = JSON.stringify(poll[0]['title']).replace(/"/g,'');
