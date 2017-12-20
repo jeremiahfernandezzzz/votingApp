@@ -128,6 +128,28 @@ app.post("/newpoll", function(request, response){
     })
 })
 
+app.get("/polls", function(request, response){
+  
+  MongoClient.connect(url, function(err, db){
+  //var ctr = 0;
+    if (db){ 
+        console.log("connected to " + url); 
+        db.collection("polls").find({}).toArray().then(element => {
+          //console.log(element);
+          var polls = JSON.stringify(element);
+          //response.writeHead(200, {'polls' : polls});
+          //response.end("yo");
+          response.sendFile(__dirname + '/public/views/polls.html', {headers: {'polls' : polls}});
+        })
+        //console.log(polls)
+      } 
+    if (err) { 
+      console.log("did not connect to " + url) 
+    } 
+  })  
+})
+
+  
 app.get("/polls/:qwe", function (request, response) {
   //request.params.qwe);
   
@@ -197,31 +219,11 @@ app.post("/polls/:qwe", function(request, response){
   })
 })
 
-app.get("/polls", function(request, response){
-  
-  MongoClient.connect(url, function(err, db){
-  //var ctr = 0;
-    if (db){ 
-        console.log("connected to " + url); 
-        db.collection("polls").find({}).toArray().then(element => {
-          //console.log(element);
-          var polls = JSON.stringify(element);
-          //response.writeHead(200, {'polls' : polls});
-          //response.end("yo");
-          response.sendFile(__dirname + '/public/views/polls.html', {headers: {'polls' : polls}});
-        })
-        //console.log(polls)
-      } 
-    if (err) { 
-      console.log("did not connect to " + url) 
-    } 
-  })
 
   //response.sendFile(__dirname + '/views/polls.html', function(){
 
   //});
   //response.send()
-})
 
 
 // listen for requests :)
