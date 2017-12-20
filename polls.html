@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<!--
+	Transit by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Voting App</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
+		<script src="views/js/jquery.min.js"></script>
+		<script src="views/js/skel.min.js"></script>
+		<script src="views/js/skel-layers.min.js"></script>
+		<script src="views/js/init.js"></script>
+		
+			<link rel="stylesheet" href="views/css/skel.css" />
+			<link rel="stylesheet" href="views/css/style.css" />
+			<link rel="stylesheet" href="views/css/style-xlarge.css" />
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+		
+	</head>
+	<body class="landing">
+
+		<!-- Header -->
+			<header id="header">
+				<h1><a href="index.html">Pollssss</a></h1>
+				<nav id="nav">
+					<ul>
+						<li><a href="/auth/twitter" class="button special">Sign In</a></li>
+					</ul>
+				</nav>
+			</header>
+
+		<!-- One -->
+			<section id="one" class="wrapper style3 special">
+				<div class="container">
+					<header class="major">
+						<h2>Submitted Polls</h2>
+						<p>click on a title to vote on a poll</p>
+					</header>
+					<div class="row 150%" id="poll">
+					</div>
+				</div>
+			</section>
+
+	</body>
+</html>
+
+
+<script>
+  var req = new XMLHttpRequest();
+  req.open('GET', document.location, false);
+  req.send(null);
+  var polls = JSON.parse(req.getResponseHeader("polls"));
+  polls.forEach(function(element){
+    var title = JSON.stringify(element['title']).replace(/"/g,'');
+    var pollArray = [];
+    Object.entries(element['choices']).forEach(function(element){
+      pollArray.push([element[0],element[1]])
+    });
+    console.log(pollArray);
+
+      // Load the Visualization API and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'choice');
+        data.addColumn('number', 'votes');
+        data.addRows(pollArray);
+        
+        // Set chart options
+        var options = {'title': "",
+                       'width': 300,
+                       'height':200};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById(title));
+        chart.draw(data, options);
+      }
+    
+    var h = document.createElement("h2");
+    var url = document.createElement("a");
+    url.setAttribute("href", 'polls/' + title);
+    url.append(document.createTextNode(title));
+    h.append(url);
+    
+    var chart = document.createElement('div');
+    chart.setAttribute("id", title);
+    //poll.append(h);
+    
+    var poll = document.createElement('div');
+    poll.setAttribute("style", "float:left; border: medium dashed gray;");
+    poll.append(chart);
+   //document.querySelector("#poll").append(poll);
+    var innerBox = document.createElement("section");
+    innerBox.setAttribute("class", "box");
+    innerBox.append(poll);
+    innerBox.append(h);
+    var outerBox = document.createElement("div");
+    //outerBox.setAttribute("class", "4u 12u$(medium)");
+    outerBox.append(innerBox);
+    document.querySelector("#poll").append(outerBox);
+      /*
+    //var title = document.createElement('h2');
+    //var results = document.createElement('h3');
+    document.createElement('h2').append(document.createTextNode(JSON.stringify(element['title'])));
+    document.createElement('h3').append(document.createTextNode(JSON.stringify(element['choices'])));
+    poll.append(title);
+    poll.append(results);
+    */
+  })
+</script>
