@@ -54,7 +54,7 @@ passport.deserializeUser(function(user, done) {
 });
 app.get('/auth/twitter', passport.authenticate('twitter'));
 app.get('/auth/twitter/callback',
-  passport.authenticate('twitter', { successRedirect: request.path,
+  passport.authenticate('twitter', { successRedirect: '/',
                                      failureRedirect: '/login'}));
 
 // we've started you off with Express, 
@@ -88,7 +88,7 @@ app.get("/mypolls", function(request, response){
             var polls = JSON.stringify(element);
             //response.writeHead(200, {'polls' : polls});
             //response.end("yo");
-            response.sendFile(__dirname + '/views/polls.html', {headers: {'polls' : polls}});
+            response.sendFile(path.join(__dirname + '/public/views/polls.html'), {headers: {'polls' : polls}});
           })
           //console.log(polls)
         } 
@@ -104,7 +104,7 @@ app.get("/mypolls", function(request, response){
 app.get("/newpoll", function (request, response){
   //if (user.length > 0) {
   if (request.user){
-    response.sendFile(__dirname + 'public/views/newpoll.html');
+    response.sendFile(path.join(__dirname + '/public/views/newpoll.html'));
   } else {
     response.redirect("/")
   }
