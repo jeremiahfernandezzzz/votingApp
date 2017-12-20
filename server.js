@@ -38,7 +38,7 @@ app.use(passport.session());
 passport.use(new TwitterStrategy({
     consumerKey: process.env.TWITTER_CONSUMER_KEY,
     consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
-    callbackURL: "http://warp-throne.glitch.me/auth/twitter/callback"
+    callbackURL: "http://cultured-numeric.glitch.me/auth/twitter/callback"
 },
   function(token, tokenSecret, profile, cb) {
     User.findOrCreate({ twitterId: profile.id }, function (err, user) {
@@ -54,7 +54,7 @@ passport.deserializeUser(function(user, done) {
 });
 app.get('/auth/twitter', passport.authenticate('twitter'));
 app.get('/auth/twitter/callback',
-  passport.authenticate('twitter', { successRedirect: '/',
+  passport.authenticate('twitter', { successRedirect: request.path,
                                      failureRedirect: '/login'}));
 
 // we've started you off with Express, 
@@ -104,7 +104,7 @@ app.get("/mypolls", function(request, response){
 app.get("/newpoll", function (request, response){
   //if (user.length > 0) {
   if (request.user){
-    response.sendFile(__dirname + '/views/newpoll.html');
+    response.sendFile(__dirname + 'public/views/newpoll.html');
   } else {
     response.redirect("/")
   }

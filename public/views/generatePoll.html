@@ -97,6 +97,13 @@
       document.querySelector("#pollChoices").append(document.createElement('br'))
   })
   
+  
+  if (poll[0]['user']) {
+    alert("asd")
+  } else {
+    alert("qwe");
+    document.querySelector("#newChoice").style = "display:none";
+  }
   //var submitButton = document.createElement('button');
   //var submitText = document.createTextNode('answer!')
   //submitButton.setAttribute('id', 'submitPollAnswer');
@@ -107,10 +114,6 @@
   
   document.querySelector("#addChoice").addEventListener("click", function(event){
     event.preventDefault();
-      if (poll[0]['user']) {
-      } else {
-        document.querySelector("#pollChoices").style = "display:none";
-      }
     
       var element = document.querySelector("#customChoice").value;
       var newInput = document.createElement('input');
