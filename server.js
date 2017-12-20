@@ -30,7 +30,7 @@ db.once('open', function() {
 // Authentication configuration
 app.use(session({
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
   secret: 'bla bla bla' 
 }));
 app.use(passport.initialize());
@@ -169,7 +169,7 @@ app.get("/polls/:qwe", function (request, response) {
               //poll1["title"] = JSON.parse(element["title"]);
               //poll1["choices"] = JSON.parse(element["choices"]);
               //poll1["user"] = JSON.parse(request.user.twitterId);
-              poll[0]["user"] = request.user.twitterId;
+              poll[0]["currentUser"] = request.user.twitterId;
               poll = JSON.stringify(poll);
               console.log(poll);
             } else {
