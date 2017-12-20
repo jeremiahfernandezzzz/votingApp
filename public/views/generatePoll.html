@@ -20,6 +20,7 @@
 			<link rel="stylesheet" href="views/css/skel.css" />
 			<link rel="stylesheet" href="views/css/style.css" />
 			<link rel="stylesheet" href="views/css/style-xlarge.css" />
+      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	</head>
 	<body class="landing">
 
@@ -59,10 +60,17 @@
 						</form>
 					</div>
 				</div>
-				<div class="container 50%">
-				yo
-				</div>
 			</section>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+				<div class="container 50%" id="results">
+				</div>
 
 	</body>
 </html>
@@ -159,4 +167,29 @@
   console.log(title);
     
   //var choices =
+  google.charts.load('current', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'choice');
+        data.addColumn('number', 'votes');
+        data.addRows(pollArray);
+        
+        // Set chart options
+        var options = {'title': "",
+                       'width': 300,
+                       'height':200};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById("results"));
+        chart.draw(data, options);
+      }
 </script>
