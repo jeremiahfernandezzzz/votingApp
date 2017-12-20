@@ -140,7 +140,7 @@ app.get("/polls", function(request, response){
           var polls = element;
           
           if (request.user) {
-            polls[0]["currentUser"] = request.user.twitterId;
+            polls["currentUser"] = request.user.twitterId;
           }
           polls = JSON.stringify(polls);
           //response.writeHead(200, {'polls' : polls});
