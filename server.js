@@ -12,6 +12,7 @@ var passport = require('passport')
   , TwitterStrategy = require('passport-twitter').Strategy;
 //var user = {};
 var mongoose = require('mongoose');
+var path = require('path');
 
 mongoose.connect(url);
 
@@ -140,7 +141,7 @@ app.get("/polls", function(request, response){
           //response.writeHead(200, {'polls' : polls});
           //response.end("yo");
           console.log(polls)
-          response.sendFile(__dirname + '/public/views/polls.html', {headers: {'polls' : polls}});
+          response.sendFile(path.join(__dirname + '/public/views/polls.html'), {headers: {'polls' : polls}});
         })
         //console.log(polls)
       } 
@@ -184,7 +185,7 @@ app.get("/polls/:qwe", function (request, response) {
             //console.log(poll)
             //response.writeHead(200, {'polls' : polls});
             //console.log("found " + poll);
-            response.sendFile(__dirname + '/public/views/generatePoll.html', {headers: {'poll' : poll}});
+            response.sendFile(path.join(__dirname + '/public/views/generatePoll.html'), {headers: {'poll' : poll}});
           }
         })
         //console.log(polls)

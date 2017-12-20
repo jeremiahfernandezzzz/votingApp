@@ -13,14 +13,14 @@
 		<meta name="keywords" content="" />
 		<!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
     
-		<script src="views/js/jquery.min.js"></script>
-		<script src="views/js/skel.min.js"></script>
-		<script src="views/js/skel-layers.min.js"></script>
-		<script src="views/js/init.js"></script>
+		<script src="/views/js/jquery.min.js"></script>
+		<script src="/views/js/skel.min.js"></script>
+		<script src="/views/js/skel-layers.min.js"></script>
+		<script src="/views/js/init.js"></script>
 		
-			<link rel="stylesheet" href="views/css/skel.css" />
-			<link rel="stylesheet" href="views/css/style.css" />
-			<link rel="stylesheet" href="views/css/style-xlarge.css" />
+			<link rel="stylesheet" href="/views/css/skel.css" />
+			<link rel="stylesheet" href="/views/css/style.css" />
+			<link rel="stylesheet" href="/views/css/style-xlarge.css" />
   
       <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	</head>
@@ -92,7 +92,7 @@
 
       //radioLabel.setAttribute('for', )
       radioLabel.append(radioText);
-      radioLabel.append(radioInput);
+      document.querySelector("#pollChoices").append(radioInput);
       document.querySelector("#pollChoices").append(radioLabel);
       document.querySelector("#pollChoices").append(document.createElement('br'))
   })
@@ -107,6 +107,10 @@
   
   document.querySelector("#addChoice").addEventListener("click", function(event){
     event.preventDefault();
+      if (poll[0]['user']) {
+      } else {
+        document.querySelector("#pollChoices").style = "display:none";
+      }
     
       var element = document.querySelector("#customChoice").value;
       var newInput = document.createElement('input');
@@ -122,6 +126,7 @@
       document.querySelector("#pollChoices").append(newLabel);
       document.querySelector("#pollChoices").append(document.createElement('br'))
   })
+  
   document.querySelector("#submitPollAnswer").addEventListener("click", function(){
     var answer = document.querySelectorAll("input[name='choice']:checked")[0].id;
     
