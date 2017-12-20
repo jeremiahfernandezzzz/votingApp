@@ -137,10 +137,15 @@ app.get("/polls", function(request, response){
         console.log("connected to " + url); 
         db.collection("polls").find({}).toArray().then(element => {
           //console.log(element);
-          var polls = JSON.stringify(element);
+          var polls = element;
+          
+          if (request.user) {
+            polls[0]["currentUser"] = request.user.twitterId;
+          }
+          polls = JSON.stringify(polls);
           //response.writeHead(200, {'polls' : polls});
           //response.end("yo");
-          console.log(polls)
+          console.log("aaaaaa" + polls)
           response.sendFile(path.join(__dirname + '/public/views/polls.html'), {headers: {'polls' : polls}});
         })
         //console.log(polls)
