@@ -162,7 +162,7 @@ app.get("/polls/:qwe", function (request, response) {
             //console.log(poll)
             //response.writeHead(200, {'polls' : polls});
             //console.log("found " + poll);
-            response.sendFile(__dirname + '/views/generatePoll.html', {headers: {'poll' : poll}});
+            response.sendFile(__dirname + '/public/views/generatePoll.html', {headers: {'poll' : poll}});
           }
         })
         //console.log(polls)
