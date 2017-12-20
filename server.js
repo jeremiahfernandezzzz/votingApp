@@ -149,7 +149,6 @@ app.get("/polls", function(request, response){
     } 
   })  
 })
-
   
 app.get("/polls/:qwe", function (request, response) {
   //request.params.qwe);
