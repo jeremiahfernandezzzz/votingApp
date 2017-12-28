@@ -28,10 +28,10 @@
 
 		<!-- Header -->
 			<header id="header">
-				<h1><a href="index.html">Polls</a></h1>
+				<h1><a href="index.html"></a></h1>
 				<nav id="nav">
-					<ul>
-						<li><a href="/auth/twitter" class="button special">Sign In</a></li>
+					<ul id="asd">
+						<li><a href="/auth/twitter" class="button special" id="signIn">Sign In</a></li>
 					</ul>
 				</nav>
 			</header>
@@ -63,18 +63,62 @@
 					</div>
 				</div>
 			</section>
-				<div class="container 50%" id="results">
+				<div class="container 50%" id="results" style="float:right">
 				</div>
 
 	</body>
 </html>
 
 <script>
-
   var req = new XMLHttpRequest();
   req.open('GET', document.location, false);
   req.send(null);
-  var poll = JSON.parse(req.getResponseHeader('poll'));
+  var poll = JSON.parse(req.getResponseHeader("poll"));
+  
+  var currentUser = req.getResponseHeader("currentUser");
+
+  if (currentUser == "") {
+    document.querySelector("#newChoice").style = "display:none";
+  } else {
+    var signIn = document.querySelector("#signIn");
+    signIn.innerHTML = "Sign Out";
+    signIn.setAttribute("href", "/logout");
+    
+    var myPolls = document.createElement("a");
+    myPolls.setAttribute("id", "myPolls");
+    myPolls.setAttribute("class", "button special");
+    myPolls.innerHTML = "My Polls";
+    myPolls.setAttribute("href", "/mypolls");
+    
+    
+    var newPoll = document.createElement("a");
+    newPoll.setAttribute("id", "newPoll");
+    newPoll.setAttribute("class", "button special");
+    newPoll.innerHTML = "New Poll";
+    newPoll.setAttribute("href", "/newpoll");
+    
+    var allPolls = document.createElement("a");
+    allPolls.setAttribute("id", "polls");
+    allPolls.setAttribute("class", "button special");
+    allPolls.innerHTML = "All Polls";
+    allPolls.setAttribute("href", "/polls");
+    
+    var li = document.createElement("li");
+    var lili = document.createElement("li");
+    var lilili = document.createElement("li");
+    
+    
+    lilili.append(allPolls);
+    document.querySelector("#asd").append(lilili);
+    
+    lili.append(newPoll);
+    document.querySelector("#asd").append(lili);
+    
+    li.append(myPolls);
+    document.querySelector("#asd").append(li);
+    //document.querySelector("#asd").createElement("li").append(newPoll);
+  }
+  
   console.log(JSON.stringify(poll));
   var choices = poll[0]['choices'];
   var title = JSON.stringify(poll[0]['title']).replace(/"/g,'');
@@ -97,13 +141,6 @@
       document.querySelector("#pollChoices").append(document.createElement('br'))
   })
   
-  
-  if (poll[0]['currentUser']) {
-    alert("asd")
-  } else {
-    alert("qwe");
-    document.querySelector("#newChoice").style = "display:none";
-  }
   //var submitButton = document.createElement('button');
   //var submitText = document.createTextNode('answer!')
   //submitButton.setAttribute('id', 'submitPollAnswer');

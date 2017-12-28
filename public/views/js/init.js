@@ -47,6 +47,7 @@
 				config: {
 					mode: 'transform'
 				},
+        
 				navButton: {
 					breakpoints: 'medium',
 					height: '4em',
@@ -55,12 +56,13 @@
 					side: 'top',
 					width: '6em'
 				},
+        
 				navPanel: {
 					animation: 'overlayX',
 					breakpoints: 'medium',
 					clickToHide: true,
 					height: '100%',
-					hidden: true,
+					hidden: false,
 					html: '<div data-action="moveElement" data-args="nav"></div>',
 					orientation: 'vertical',
 					position: 'top-left',

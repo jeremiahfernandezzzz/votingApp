@@ -66,16 +66,21 @@ app.use(express.static('public'));
 // http://expressjs.com/en/starter/basic-routing.html
 app.get("/", function (request, response) {
   //console.log(JSON.stringify(request.users));
-  //response.sendFile(__dirname + '/public/views/polls.html');
+  response.sendFile(__dirname + '/public/views/landing.html');
   //response.set
   
   if (request.user){
     response.redirect("/mypolls")
   } else {
-    response.redirect("/polls")
   }
   
 });
+
+
+app.get("/logout", function(request, response){
+  request.logout();
+  response.redirect('/polls');
+})
 
 app.get("/mypolls", function(request, response){
   if (request.user){
@@ -86,9 +91,10 @@ app.get("/mypolls", function(request, response){
           db.collection("polls").find({"user": request.user.twitterId}).toArray().then(element => {
             //console.log(element);
             var polls = JSON.stringify(element);
+            var currentUser = request.user.twitterId
             //response.writeHead(200, {'polls' : polls});
             //response.end("yo");
-            response.sendFile(path.join(__dirname + '/public/views/polls.html'), {headers: {'polls' : polls}});
+            response.sendFile(path.join(__dirname + '/public/views/mypolls.html'), {headers: {'polls' : polls,  'currentUser': currentUser}});
           })
           //console.log(polls)
         } 
@@ -104,7 +110,8 @@ app.get("/mypolls", function(request, response){
 app.get("/newpoll", function (request, response){
   //if (user.length > 0) {
   if (request.user){
-    response.sendFile(path.join(__dirname + '/public/views/newpoll.html'));
+    var currentUser = request.user.twitterId
+    response.sendFile(path.join(__dirname + '/public/views/newpoll.html'), {headers: {'currentUser': currentUser}});
   } else {
     response.redirect("/")
   }
@@ -119,8 +126,15 @@ app.post("/newpoll", function(request, response){
       console.log("received: " + JSON.stringify(poll))
       MongoClient.connect(url, function(err, db){
         if (db){
-          console.log("connected to " + url);
-          db.collection("polls").insert(poll);
+            console.log("connected to " + url);
+            db.collection("polls").find({'title' : poll["title"]}).toArray().then(element => {
+              if (element == "") {
+                db.collection("polls").insert(poll);
+                response.redirect("/polladded");
+              } else {
+                response.redirect("/pollnotadded");
+              }
+            })
         }
         if (err) {
          console.log("did not connect to " + url)
@@ -129,6 +143,15 @@ app.post("/newpoll", function(request, response){
     })
 })
 
+app.get("/polladded", function(request, response){
+  response.sendFile(path.join(__dirname + '/public/views/polladded.html'));
+})
+        
+        
+app.get("/pollnotadded", function(request, response){
+  response.sendFile(path.join(__dirname + '/public/views/pollnotadded.html'));
+})
+        
 app.get("/polls", function(request, response){
   
   MongoClient.connect(url, function(err, db){
@@ -145,7 +168,7 @@ app.get("/polls", function(request, response){
           polls = JSON.stringify(polls);
           //response.writeHead(200, {'polls' : polls});
           //response.end("yo");
-          console.log("aaaaaa" + polls)
+          console.log(polls)
           response.sendFile(path.join(__dirname + '/public/views/polls.html'), {headers: {'polls' : polls, 'currentUser': currentUser}});
         })
         //console.log(polls)
@@ -168,13 +191,13 @@ app.get("/polls/:qwe", function (request, response) {
           if (element == "") {
             response.send('no such thing as a "' + request.params.qwe + '"')
           } else {
-            
+            var currentUser = "";
             if (request.user) {
               var poll = element;
               //poll1["title"] = JSON.parse(element["title"]);
               //poll1["choices"] = JSON.parse(element["choices"]);
               //poll1["user"] = JSON.parse(request.user.twitterId);
-              poll[0]["currentUser"] = request.user.twitterId;
+              currentUser = request.user.twitterId;
               poll = JSON.stringify(poll);
               console.log(poll);
             } else {
@@ -190,7 +213,7 @@ app.get("/polls/:qwe", function (request, response) {
             //console.log(poll)
             //response.writeHead(200, {'polls' : polls});
             //console.log("found " + poll);
-            response.sendFile(path.join(__dirname + '/public/views/generatePoll.html'), {headers: {'poll' : poll}});
+            response.sendFile(path.join(__dirname + '/public/views/generatePoll.html'), {headers: {'poll' : poll, 'currentUser': currentUser}});
           }
         })
         //console.log(polls)
@@ -225,6 +248,30 @@ app.post("/polls/:qwe", function(request, response){
   })
 })
 
+app.get("/polls/:qwe/delete", function (request, response) {
+  //request.params.qwe);
+  
+  if (request.user){
+    var currentUser = request.user.twitterId;
+    
+    MongoClient.connect(url, function(err, db){
+  //var ctr = 0;
+    if (db){ 
+        console.log("connected to " + url); 
+        db.collection("polls").deleteOne({'title' : request.params.qwe});
+        response.redirect("/mypolls");
+        //console.log(polls)
+      } 
+    if (err) { 
+      console.log("did not connect to " + url) 
+    } 
+  })
+  } else {
+    response.redirect("/")
+  }
+  
+  //response.set()
+  });
 
   //response.sendFile(__dirname + '/views/polls.html', function(){
 

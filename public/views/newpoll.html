@@ -7,7 +7,7 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>Transit by TEMPLATED</title>
+		<title>ew Poll</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
@@ -24,10 +24,10 @@
 
 		<!-- Header -->
 			<header id="header">
-				<h1><a href="index.html">Polls</a></h1>
+				<h1><a href="index.html"></a></h1>
 				<nav id="nav">
-					<ul>
-						<li><a href="/auth/twitter" class="button special">Sign In</a></li>
+					<ul id="asd">
+						<li><a href="/auth/twitter" class="button special" id="signIn">Sign In</a></li>
 					</ul>
 				</nav>
 			</header>
@@ -36,8 +36,7 @@
 			<section id="three" class="wrapper style3 special">
 				<div class="container">
 					<header class="major">
-						<h2>Consectetur adipisicing elit</h2>
-						<p>Lorem ipsum dolor sit amet. Delectus consequatur, similique quia!</p>
+						<h2>submit a new poll!</h2>
 					</header>
 				</div>
 				<div class="container 50%">
@@ -51,7 +50,7 @@
 							</div>
 							<div class="12u$">
 								<ul class="actions">
-									<li><input type="button" id="submitNewPoll" class="special large" value="Submit"></li>
+									<li><button type="Submit" id="submitNewPoll" class="special large" value="Submit"></li>
 								</ul>
 							</div>
 						</div>
@@ -66,13 +65,61 @@
 var newPoll = {};
 var newChoice = {};
   
+  var req = new XMLHttpRequest();
+  req.open('GET', document.location, false);
+  req.send(null);
+  var polls = JSON.parse(req.getResponseHeader("polls"));
+  
+  var currentUser = req.getResponseHeader("currentUser");
+
+  if (currentUser == "") {
+  } else {
+    var signIn = document.querySelector("#signIn");
+    signIn.innerHTML = "Sign Out";
+    signIn.setAttribute("href", "/logout");
+    
+    var myPolls = document.createElement("a");
+    myPolls.setAttribute("id", "myPolls");
+    myPolls.setAttribute("class", "button special");
+    myPolls.innerHTML = "My Polls";
+    myPolls.setAttribute("href", "/mypolls");
+    
+    
+    var newPoll = document.createElement("a");
+    newPoll.setAttribute("id", "newPoll");
+    newPoll.setAttribute("class", "button special");
+    newPoll.innerHTML = "New Poll";
+    newPoll.setAttribute("href", "/newpoll");
+    
+    var allPolls = document.createElement("a");
+    allPolls.setAttribute("id", "polls");
+    allPolls.setAttribute("class", "button special");
+    allPolls.innerHTML = "All Polls";
+    allPolls.setAttribute("href", "/polls");
+    
+    var li = document.createElement("li");
+    var lili = document.createElement("li");
+    var lilili = document.createElement("li");
+    
+    
+    lilili.append(allPolls);
+    document.querySelector("#asd").append(lilili);
+    
+    lili.append(newPoll);
+    document.querySelector("#asd").append(lili);
+    
+    li.append(myPolls);
+    document.querySelector("#asd").append(li);
+    //document.querySelector("#asd").createElement("li").append(newPoll);
+  }
+  
 document.querySelector("#submitNewPoll").addEventListener("click", function(e){
   //e.preventDefault();
       if (document.querySelector("#newPollChoices").value == "" || document.querySelector("#newPollTitle").value == "") {
         alert("empty title and/or choice list");
       } else {
           document.querySelector("#submitNewPoll").disabled = true;
-          event.preventDefault();        
+          //event.preventDefault();        
 
           //this part stores the poll info (title,choices:votes) in a JSON object
           var newChoiceArray = document.querySelector("#newPollChoices").value.split('\n');
@@ -98,8 +145,6 @@ document.querySelector("#submitNewPoll").addEventListener("click", function(e){
           }
 
           httpGetAsync(window.location, function(response) {
-            alert("poll added: " + JSON.stringify(newPoll), response);
-            window.location = "warp-throne.glitch.me/polls"
           });
       }
   
