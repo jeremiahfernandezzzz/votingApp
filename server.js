@@ -143,7 +143,6 @@ app.post("/newpoll", function(request, response){
     choices: newChoice
   };
 
-  
   console.log(newPoll);
   /*
     var poll;
