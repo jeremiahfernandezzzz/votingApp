@@ -128,14 +128,14 @@ app.get("/newpoll", function (request, response){
 })
 
 app.post("/newpoll", function(request, response){
-  console.log(request.body.choices);
+  console.log(typeof(request.body.choices));
   var newPoll = {};
   var newChoice = {};
   
   var newChoiceArray = request.body.choices.split('\n');
   
   newChoiceArray.forEach(function(element){
-    newChoice[element] = 0 
+    newChoice[element.replace(/\r/g,"")] = 0 
   });
           
   newPoll = {
