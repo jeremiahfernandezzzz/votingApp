@@ -124,22 +124,24 @@ app.post("/newpoll", function(request, response){
       poll["user"] = request.user.twitterId;
     
       console.log("received: " + JSON.stringify(poll))
-      MongoClient.connect(url, function(err, db){
-        if (db){
+    })
+  
+    MongoClient.connect(url, function(err, db){
+      if (db){
             console.log("connected to " + url);
             db.collection("polls").find({'title' : poll["title"]}).toArray().then(element => {
-              if (element == "") {
-                db.collection("polls").insert(poll);
-                response.redirect("/polladded");
-              } else {
-                response.redirect("/pollnotadded");
-              }
-            })
-        }
-        if (err) {
-         console.log("did not connect to " + url)
-        }
-      })
+          if (element == "") {
+            db.collection("polls").insert(poll);
+            response.redirect("/polladded");
+          } else {
+            console.log("poll not added");
+            response.redirect("/")
+          }
+        })
+      }
+      if (err) {
+       console.log("did not connect to " + url)
+      }
     })
 })
 
