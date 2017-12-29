@@ -130,9 +130,9 @@ app.post("/newpoll", function(request, response){
             db.collection("polls").find({'title' : poll["title"]}).toArray().then(element => {
               if (element == "") {
                 db.collection("polls").insert(poll);
-                response.redirect("/polladded");
+                response.send("poll added");
               } else {
-                response.redirect("/pollnotadded");
+                response.send("poll not added");
               }
             })
         }
@@ -177,6 +177,10 @@ app.get("/polls", function(request, response){
       console.log("did not connect to " + url) 
     } 
   })  
+})
+
+app.post("/", function(request, response){
+  response.send("whaddup");
 })
   
 app.get("/polls/:qwe", function (request, response) {

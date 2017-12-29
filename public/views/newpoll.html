@@ -40,7 +40,7 @@
 					</header>
 				</div>
 				<div class="container 50%">
-					<form action="/polls" method="post">
+					<form action="/" method="post">
 						<div class="row uniform">
 							<div class="6u 12u$(small)">
 								<input id="newPollTitle" value="" placeholder="Title goes here" type="text">
@@ -50,7 +50,7 @@
 							</div>
 							<div class="12u$">
 								<ul class="actions">
-                  <li><input type="submit" class="special large" value="submit"></li>
+                  <li><input type="submit" id="submitNewPoll" class="special large" value="submit"></li>
 								</ul>
 							</div>
 						</div>
@@ -113,9 +113,9 @@ var newChoice = {};
     //document.querySelector("#asd").createElement("li").append(newPoll);
   }
   
-document.querySelector("#submitNewPoll").addEventListener("click", function(e){
-  //e.preventDefault();
+document.addEventListener("submit", function(e){
       if (document.querySelector("#newPollChoices").value == "" || document.querySelector("#newPollTitle").value == "") {
+        e.preventDefault();
         alert("empty title and/or choice list");
       } else {
           document.querySelector("#submitNewPoll").disabled = true;
