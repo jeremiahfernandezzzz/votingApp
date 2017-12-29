@@ -13,7 +13,7 @@ var passport = require('passport')
 //var user = {};
 var mongoose = require('mongoose');
 var path = require('path');
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
 
 mongoose.connect(url);
 
@@ -28,6 +28,8 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   console.log("we're connected!")
 });
+
+
 // Authentication configuration
 app.use(session({
   resave: false,
@@ -64,7 +66,11 @@ app.get('/auth/twitter/callback',
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static('public'));
 
-app.use(bodyParser());
+app.use(bodyParser.json());
+
+var listener = app.listen(process.env.PORT, function () {
+  console.log('Your app is listening on port ' + listener.address().port);
+});
 
 // http://expressjs.com/en/starter/basic-routing.html
 app.get("/", function (request, response) {
@@ -121,7 +127,7 @@ app.get("/newpoll", function (request, response){
 })
 
 app.post("/newpoll", function(request, response){
-              console.log(request.body.title);
+              console.error(request.body.title);
   /*
     var poll;
     request.on('data', function(data) {
@@ -296,6 +302,4 @@ app.get("/polls/:qwe/delete", function (request, response) {
 
 
 // listen for requests :)
-var listener = app.listen(process.env.PORT, function () {
-  console.log('Your app is listening on port ' + listener.address().port);
-});
+
