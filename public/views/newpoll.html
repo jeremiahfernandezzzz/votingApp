@@ -50,13 +50,19 @@
 							</div>
 							<div class="12u$">
 								<ul class="actions">
-                  <li><input type="submit" id="submitNewPoll" class="special large" value="submit"></li>
+                  <li><button type="Submit">submit</button></li>
 								</ul>
 							</div>
 						</div>
 					</form>
 				</div>
 			</section>
+    <form>
+      <textarea id="newPollChoicess" name="choices" placeholder="Choices separated by newline" rows="6"></textarea>
+      <button type="Submit">
+        submit
+      </button>
+    </form>
 
 	</body>
 </html>
@@ -117,8 +123,8 @@ document.addEventListener("submit", function(e){
       if (document.querySelector("#newPollChoices").value == "" || document.querySelector("#newPollTitle").value == "") {
         alert("empty title and/or choice list");
       } else {
-          document.querySelector("#submitNewPoll").disabled = true;
-
+          //document.querySelector("#submitNewPoll").disabled = true;
+          /*
           //this part stores the poll info (title,choices:votes) in a JSON object
           var newChoiceArray = document.querySelector("#newPollChoices").value.split('\n');
           
@@ -144,6 +150,7 @@ document.addEventListener("submit", function(e){
 
           httpGetAsync(window.location, function(response) {
           });
+          */
       }
   
 },false)
