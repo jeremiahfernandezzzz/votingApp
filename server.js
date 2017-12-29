@@ -130,9 +130,9 @@ app.post("/newpoll", function(request, response){
             db.collection("polls").find({'title' : poll["title"]}).toArray().then(element => {
               if (element == "") {
                 db.collection("polls").insert(poll);
-                response.send("poll added");
+                console.log("poll added");
               } else {
-                response.send("poll not added");
+                console.log("poll not added");
               }
             })
         }

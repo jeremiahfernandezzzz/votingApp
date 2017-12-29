@@ -114,8 +114,8 @@ var newChoice = {};
   }
   
 document.addEventListener("submit", function(e){
-      if (document.querySelector("#newPollChoices").value == "" || document.querySelector("#newPollTitle").value == "") {
         e.preventDefault();
+      if (document.querySelector("#newPollChoices").value == "" || document.querySelector("#newPollTitle").value == "") {
         alert("empty title and/or choice list");
       } else {
           document.querySelector("#submitNewPoll").disabled = true;
