@@ -67,6 +67,7 @@ app.get('/auth/twitter/callback',
 app.use(express.static('public'));
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 var listener = app.listen(process.env.PORT, function () {
   console.log('Your app is listening on port ' + listener.address().port);
@@ -127,7 +128,23 @@ app.get("/newpoll", function (request, response){
 })
 
 app.post("/newpoll", function(request, response){
-  console.log(request.body);
+  console.log(request.body.choices);
+  var newPoll = {};
+  var newChoice = {};
+  
+  var newChoiceArray = request.body.choices.split('\n');
+  
+  newChoiceArray.forEach(function(element){
+    newChoice[element] = 0 
+  });
+          
+  newPoll = {
+    title: request.body.title,
+    choices: newChoice
+  };
+
+  
+  console.log(newPoll);
   /*
     var poll;
     request.on('data', function(data) {
