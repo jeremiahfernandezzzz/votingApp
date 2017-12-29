@@ -127,7 +127,7 @@ app.get("/newpoll", function (request, response){
 })
 
 app.post("/newpoll", function(request, response){
-              console.error(request.body.title);
+  console.log(request.body.title);
   /*
     var poll;
     request.on('data', function(data) {
