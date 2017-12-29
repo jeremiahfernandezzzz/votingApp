@@ -57,12 +57,6 @@
 					</form>
 				</div>
 			</section>
-    <form>
-      <textarea id="newPollChoicess" name="choices" placeholder="Choices separated by newline" rows="6"></textarea>
-      <button type="Submit">
-        submit
-      </button>
-    </form>
 
 	</body>
 </html>
@@ -121,6 +115,7 @@ var newChoice = {};
   
 document.addEventListener("submit", function(e){
       if (document.querySelector("#newPollChoices").value == "" || document.querySelector("#newPollTitle").value == "") {
+        e.preventDefault();
         alert("empty title and/or choice list");
       } else {
           //document.querySelector("#submitNewPoll").disabled = true;
