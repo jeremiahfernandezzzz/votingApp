@@ -118,6 +118,8 @@ app.get("/newpoll", function (request, response){
 })
 
 app.post("/newpoll", function(request, response){
+              console.log(request.body);
+  /*
     var poll;
     request.on('data', function(data) {
       poll = JSON.parse(data);
@@ -147,7 +149,7 @@ app.post("/newpoll", function(request, response){
          console.log("did not connect to " + url)
         }
       })
-    
+    */
 })
 
 app.get("/polladded", function(request, response){
