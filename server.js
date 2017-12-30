@@ -140,7 +140,8 @@ app.post("/newpoll", function(request, response){
           
   poll = {
     title: request.body.title,
-    choices: newChoice
+    choices: newChoice,
+    user: request.user.twitterId
   };
 
   console.log(poll);
@@ -161,13 +162,12 @@ app.post("/newpoll", function(request, response){
               db.collection("polls").find({'title' : poll["title"]}).toArray().then(element => {
             if (element == "") {
               db.collection("polls").insert(poll);
-              response.send("fack");
-              console.log("poll added");
+              response.send("poll added");
               //console.log(request.body);
             } else {
               console.log("poll not added");
               //console.log(request.body);
-              response.redirect("/pollnotadded")
+              response.send("poll not added")
             }
           })
         }
