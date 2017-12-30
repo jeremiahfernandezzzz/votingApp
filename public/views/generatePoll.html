@@ -212,7 +212,7 @@
   Object.entries(poll[0]['choices']).forEach(function(element){
     pollArray.push([element[0],element[1]])
   });
-  console.log(title);
+  console.log(pollArray);
   
   //var choices =
   google.charts.load('current', {'packages':['corechart']});
@@ -233,8 +233,9 @@
         
         // Set chart options
         var options = {'title': "",
-                       'width': 300,
-                       'height':200};
+                       sliceVisibilityThreshold:0,
+                       'width': 500,
+                       'height':300};
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.PieChart(document.getElementById("results"));
