@@ -40,6 +40,7 @@
 			<section id="three" class="wrapper style3 special">
 				<div class="container">
 					<header class="major">
+            <input type="button" id="deletePoll" class="special small" value="delete">
 						<h2 id="pollTitle">Poll Title</h2>
 					</header>
 				</div>
@@ -65,12 +66,25 @@
 			</section>
 				<div class="container 50%" id="results" style="float:right">
 				</div>
-      <input type="button" id="deletePoll"  class="special big"  value="delete">
         
 	</body>
 </html>
 
 <script>
+  document.querySelector("#deletePoll").addEventListener("click", function(event){
+    function (){
+             var retVal = confirm("Do you want to continue ?");
+             if( retVal == true ){
+                document.write ("User wants to continue!");
+                return true;
+             }
+             else{
+                document.write ("User does not want to continue!");
+                return false;
+             }
+          }
+  })
+  
   var req = new XMLHttpRequest();
   req.open('GET', document.location, false);
   req.send(null);
