@@ -219,7 +219,6 @@ app.post("/", function(request, response){
   
 app.get("/polls/:qwe", function (request, response) {
   //request.params.qwe);
-  
   MongoClient.connect(url, function(err, db){
   //var ctr = 0;
     if (db){ 
@@ -265,6 +264,8 @@ app.get("/polls/:qwe", function (request, response) {
 
 app.post("/polls/:qwe", function(request, response){ 
   
+  console.log(request.body);
+  /*
   var title = request.params.qwe;
   request.on('data', function(data) {
     console.log("he hath answered: " + choice);
@@ -284,6 +285,7 @@ app.post("/polls/:qwe", function(request, response){
     })
     //response.redirect("/polls");
   })
+  */
 })
 
 app.get("/polls/:qwe/delete", function (request, response) {

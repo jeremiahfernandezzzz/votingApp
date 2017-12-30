@@ -51,7 +51,7 @@
 								</div>
 								<div class="12u$">
 									<ul class="actions">
-										<li><input type="button" value="submit answer" class="special big" id="submitPollAnswer"></li>
+										<li><input type="Submit" value="submit answer" class="special big" id="submitPollAnswer"></li>
 										<li id="newChoice">
 											<input id="customChoice" type="text" maxlength="20" placeholder="custom choice here">
 											<input type="button" id="addChoice" class="special small" value="add choice">
@@ -127,6 +127,7 @@
       var radioInput = document.createElement('input');
       var radioLabel = document.createElement('label');
       var radioText = document.createTextNode(element);
+      radioInput.setAttribute('value', element);
       radioInput.setAttribute('type', 'radio');
       radioInput.setAttribute('name', 'choice');
       radioInput.setAttribute('id', element);
@@ -167,13 +168,14 @@
       document.querySelector("#pollChoices").append(document.createElement('br'))
   })
   
-  document.querySelector("#submitPollAnswer").addEventListener("click", function(){
+  document.addEventListener("submit", function(){
     var answer = document.querySelectorAll("input[name='choice']:checked")[0].id;
     
     if (answer.length == 0){
       alert("none selected");
       console.log("none selected")
     } else {
+      /*
       console.log(answer + " selected");
       function httpGetAsync(theUrl, callback){
             var xmlHttp = new XMLHttpRequest();
@@ -189,15 +191,17 @@
           httpGetAsync(window.location, function(response) {
             console.log("answered: " + answer, response);
         });
+      */
     }
   })
   
+  /*
   var pollArray = [];
   Object.entries(poll[0]['choices']).forEach(function(element){
     pollArray.push([element[0],element[1]])
   });
   console.log(title);
-    
+    */
   //var choices =
   google.charts.load('current', {'packages':['corechart']});
 
