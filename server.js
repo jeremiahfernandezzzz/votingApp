@@ -264,12 +264,11 @@ app.get("/polls/:qwe", function (request, response) {
 
 app.post("/polls/:qwe", function(request, response){ 
   
-  console.log(request.body);
-  /*
   var title = request.params.qwe;
-  request.on('data', function(data) {
-    console.log("he hath answered: " + choice);
-    var choice = 'choices.' + data.toString();
+  //request.on('data', function(data) {
+    var data = request.body.choice;
+    console.log("he hath answered: " + data);
+    var choice = 'choices.' + data;
     var update = {};
     update[choice] = 1;
     MongoClient.connect(url, function(err, db){
@@ -278,15 +277,16 @@ app.post("/polls/:qwe", function(request, response){
            { title: title },
            { $inc: update }
           )//.toArray(function(element){console.log(JSON.stringify(element))})
+          response.redirect("back");
         } 
       if (err) { 
-        console.log("did not connect to " + url) 
+        console.log("did not connect to " + url)
+        response.send("vote not sent")
       } 
     })
     //response.redirect("/polls");
   })
-  */
-})
+//})
 
 app.get("/polls/:qwe/delete", function (request, response) {
   //request.params.qwe);
