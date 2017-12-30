@@ -71,19 +71,6 @@
 </html>
 
 <script>
-  document.querySelector("#deletePoll").addEventListener("click", function(event){
-    function (){
-             var retVal = confirm("Do you want to continue ?");
-             if( retVal == true ){
-                document.write ("User wants to continue!");
-                return true;
-             }
-             else{
-                document.write ("User does not want to continue!");
-                return false;
-             }
-          }
-  })
   
   var req = new XMLHttpRequest();
   req.open('GET', document.location, false);
@@ -157,6 +144,14 @@
       document.querySelector("#pollChoices").append(document.createElement('br'))
   })
   
+  
+  document.querySelector("#deletePoll").addEventListener("click", function(event){
+    
+      if(window.confirm("this will delete the poll " + title)){
+        window.location = window.location + "/delete"
+      };
+       
+  })
   //var submitButton = document.createElement('button');
   //var submitText = document.createTextNode('answer!')
   //submitButton.setAttribute('id', 'submitPollAnswer');
