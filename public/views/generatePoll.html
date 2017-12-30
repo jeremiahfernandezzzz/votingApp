@@ -167,6 +167,7 @@
       var newInput = document.createElement('input');
       var newLabel = document.createElement('label');
       var newText = document.createTextNode(element);
+      newInput.setAttribute('value', element);
       newInput.setAttribute('type', 'radio');
       newInput.setAttribute('name', 'choice');
       newInput.setAttribute('id', element);
@@ -178,7 +179,8 @@
       document.querySelector("#pollChoices").append(document.createElement('br'))
   })
   
-  document.addEventListener("submit", function(){
+  document.addEventListener("submit", function(e){
+    e.preventDefault;
     var answer = document.querySelectorAll("input[name='choice']:checked")[0].id;
     
     if (answer.length == 0){
