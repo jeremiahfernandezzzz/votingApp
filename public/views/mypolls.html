@@ -118,15 +118,18 @@
       // instantiates the pie chart, passes in the data and
       // draws it.
       function drawChart() {
-
+        
         // Create the data table.
         var data = new google.visualization.DataTable();
+        
         data.addColumn('string', 'choice');
         data.addColumn('number', 'votes');
         data.addRows(pollArray);
         
+        
         // Set chart options
         var options = {'title': "",
+                       sliceVisibilityThreshold:0,
                        'width': 300,
                        'height':200};
 
@@ -165,5 +168,10 @@
     poll.append(title);
     poll.append(results);
     */
+    if (data.getNumberOfRows() === 0) {
+      data.addRows([
+        ['', 0, null, 'No Data Copy']
+      ]);
+    }
   })
 </script>
