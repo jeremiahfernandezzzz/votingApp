@@ -98,7 +98,7 @@ app.get("/mypolls", function(request, response){
     //var ctr = 0;
       if (db){ 
           console.log("connected to " + url); 
-          db.collection("polls").find({"user": request.user.twitterId}).toArray().then(element => {
+          db.collection("polls").find({"user": request.user.twitterId}).sort({_id:-1}).toArray().then(element => {
             //console.log(element);
             var polls = JSON.stringify(element);
             var currentUser = request.user.twitterId
@@ -162,7 +162,7 @@ app.post("/newpoll", function(request, response){
               db.collection("polls").find({'title' : poll["title"]}).toArray().then(element => {
             if (element == "") {
               db.collection("polls").insert(poll);
-              response.send("poll added");
+              response.redirect("/mypolls");
               //console.log(request.body);
             } else {
               console.log("poll not added");
@@ -192,7 +192,7 @@ app.get("/polls", function(request, response){
   //var ctr = 0;
     if (db){ 
         console.log("connected to " + url); 
-        db.collection("polls").find({}).toArray().then(element => {
+        db.collection("polls").find({}).sort({_id:-1}).toArray().then(element => {
           //console.log(element);
           var polls = element;
           var currentUser = "";
