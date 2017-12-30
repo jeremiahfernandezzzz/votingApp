@@ -129,7 +129,7 @@ app.get("/newpoll", function (request, response){
 
 app.post("/newpoll", function(request, response){
   console.log(typeof(request.body.choices));
-  var newPoll = {};
+  var poll = {};
   var newChoice = {};
   
   var newChoiceArray = request.body.choices.split('\n');
@@ -138,12 +138,12 @@ app.post("/newpoll", function(request, response){
     newChoice[element.replace(/\r/g,"")] = 0 
   });
           
-  newPoll = {
+  poll = {
     title: request.body.title,
     choices: newChoice
   };
 
-  console.log(newPoll);
+  console.log(poll);
   /*
     var poll;
     request.on('data', function(data) {
@@ -153,6 +153,7 @@ app.post("/newpoll", function(request, response){
       console.log("received: " + JSON.stringify(poll))
 
     })
+    */
   
       MongoClient.connect(url, function(err, db){
         if (db){
@@ -160,12 +161,12 @@ app.post("/newpoll", function(request, response){
               db.collection("polls").find({'title' : poll["title"]}).toArray().then(element => {
             if (element == "") {
               db.collection("polls").insert(poll);
-              response.redirect("/polladded");
+              response.send("fack");
               console.log("poll added");
-              console.log(request.body);
+              //console.log(request.body);
             } else {
               console.log("poll not added");
-              console.log(request.body);
+              //console.log(request.body);
               response.redirect("/pollnotadded")
             }
           })
@@ -174,7 +175,6 @@ app.post("/newpoll", function(request, response){
          console.log("did not connect to " + url)
         }
       })
-    */
 })
 
 app.get("/polladded", function(request, response){
