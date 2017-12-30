@@ -46,7 +46,7 @@
 				</div>
 				<div style="float:left">
 					<div class="container 50%">
-						<form action="#" method="post">
+						<form action="" method="post">
 							<div class="row uniform">
 								<div class="12u$" id="pollChoices">
 								</div>
@@ -180,12 +180,12 @@
   })
   
   document.addEventListener("submit", function(e){
-    e.preventDefault;
-    var answer = document.querySelectorAll("input[name='choice']:checked")[0].id;
+    var answer = document.querySelectorAll("input[name='choice']:checked")[0];
     
-    if (answer.length == 0){
+    if (!answer){
       alert("none selected");
-      console.log("none selected")
+      console.log("none selected");
+      e.preventDefault();
     } else {
       /*
       console.log(answer + " selected");
