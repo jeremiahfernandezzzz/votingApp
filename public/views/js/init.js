@@ -62,7 +62,7 @@
 					breakpoints: 'medium',
 					clickToHide: true,
 					height: '100%',
-					hidden: false,
+					hidden: true,
 					html: '<div data-action="moveElement" data-args="nav"></div>',
 					orientation: 'vertical',
 					position: 'top-left',
